@@ -1,3 +1,6 @@
+![cat_dog_banner](https://github.com/user-attachments/assets/d6340aa7-1402-4a42-86c1-0f36d7150668)
+
+
 # Cats vs Dogs
 ### Image Classification using Convolutional Neural Network
 
@@ -24,7 +27,7 @@ Finally, I will take advantage of transfer learning by using the well-establishe
 2. [Custom CNN model](#custom-cnn-model)
 3. [Keras Tuner](#keras-tuner)
 4. [Transfer Learning](#transfer-learning)
-5. [Next Steps](#next-steps)
+5. [Conclusion](#conclusion)
 6. [References](#references)
 
 
@@ -116,6 +119,9 @@ My best model from the keras tuner was found on trial #18 out of 22 completed tr
 
 <img width="479" alt="Screenshot 2025-04-20 at 12 16 54 PM" src="https://github.com/user-attachments/assets/a0bae699-a716-404d-99a4-d5f8938c5a29" />
 
+<img src="https://github.com/user-attachments/assets/20231e36-91ae-4c26-a6a4-041e8f392dba" width="400">
+
+
 With the following hyperparameters:
 
 - 'num_layers': 3,
@@ -133,7 +139,7 @@ The above plots show gradual improvement in both training and validation perform
 Next, I will use transfer learning to build upon pre-trained models.
 
 
-### Transfer learning
+# Transfer learning
 
 Transfer learning allows me to start with a strong, proven model that already understands basic patterns in images — so I can focus on fine-tuning it for my specific task, faster and with better results. Pre-trained models have already learned very strong, general features. Even if my dataset is small, I can get high-quality feature extraction immediately. Results are often much better than training a small CNN from scratch.
 
@@ -141,12 +147,19 @@ In my transfer learning model, I leveraged the keras application ResNet50V2. I c
 
 For my base model I loaded the ResNet50V2 model pretrained on ImageNet, excluding its top classification layers (include_top=False). I then froze the base model, so that the the pretrained ResNet50V2 weights will not be trained in order to preserve the powerful feature representations it already learned. To preprocess the data, I applied ResNet50V2’s recommended preprocess_input function to scale and normalize the input images correctly before feeding them into the model.
 
-I started with a simple transfer model, but immediately saw a significant improvement in performance compared to my CNN models trained from stratch. I then tuned the hyperparameters by hand, and reached my best model, which contains 2 Dense layers with 64 units each and ReLU activation, each followed by Dropout layers for regularization.
+I started with a simple transfer model, but immediately saw a significant improvement in performance compared to my CNN models trained from stratch. I then tuned the hyperparameters by hand, and reached my best model, which contains 2 Dense layers with 32 units each and ReLU activation, each followed by Dropout layers for regularization.
+
+<img src="https://github.com/user-attachments/assets/7b0bc7a8-636f-4afc-bf8f-d431e8308701" width="400">
+<img src="https://github.com/user-attachments/assets/c635a4a3-b7bc-4a92-9c2b-4552f2c94115" width="400">
+
+The above plots show that both train and loss are improving up to the third epoch, at which point val starts to diverge. Regardless, it is definitely my best model by far as can be seen in the below metrics comparisons:
+
+- Manually Tuned Model: loss: 0.2042 - accuracy: 0.9160 - val_loss: 0.3702 - val_accuracy: 0.8362
+- Keras Tuner Model: loss: 0.2055 - accuracy: 0.9155 - val_loss: 0.3302 - val_accuracy: 0.8628
+- Transfer Model: loss: 0.0468 - accuracy: 0.9847 - val_loss: 0.0766 - val_accuracy: 0.9824
 
 
-
-
-### Conclusion
+# Conclusion
 
 This project lays the groundwork for building robust image classification models using both custom CNNs and transfer learning strategies. Through model design, hyperparameter tuning, and leveraging pretrained architectures like ResNet50V2, significant progress was made toward accurately distinguishing between dogs and cats.
 
@@ -157,9 +170,10 @@ For my steps steps, I would like to explore the following improvements to my mod
   2. Enhancing regularization techniques and expanding the dataset to further improve generalization and resilience against overfitting.
 
 
-### References
+# References
 
  1. Will Cukierski. Dogs vs. Cats. https://kaggle.com/competitions/dogs-vs-cats, 2013. Kaggle.
  2. Microsoft Research. Asirra: A CAPTCHA that Exploits Interest-Aligned Manual Image Categorization. Dataset originally available through Petfinder.com and hosted via Kaggle.
  3. He, K., Zhang, X., Ren, S., & Sun, J. (2016). Identity Mappings in Deep Residual Networks. *European Conference on Computer Vision (ECCV)*. https://arxiv.org/abs/1603.05027
  4. TensorFlow Authors. (2015). TensorFlow: Large-scale machine learning on heterogeneous systems. https://www.tensorflow.org/
+ 5. Banner Image credited to FreeVector.com: <a href="https://www.freevector.com/cute-cat-and-dogs-background-81873">FreeVector.com</a>
