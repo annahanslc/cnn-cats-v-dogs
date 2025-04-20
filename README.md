@@ -92,13 +92,11 @@ Based on the above plots, although the training loss and accuracy continue to im
 This indicates that the model is struggling to make meaningful improvements on unseen data. While the model fits the training data increasingly well, the validation metrics remain unstable and eventually stagnate. This clear gap between training and validation performance suggests that the model is overfitting — learning the training examples too well without generalizing effectively to new data.
 
 
-### Keras Tuner
+# Keras Tuner
 
 Next, I used the keras tuner to help me search across many combinations of hyperparameters to find the best performing model. 
 
-To optimize the model’s architecture, I implemented a custom tune_model function for Keras Tuner.
-
-This function dynamically builds a CNN model based on different hyperparameters selected during the tuning process:
+To optimize the model’s architecture, I implemented a custom tune_model function for Keras Tuner. This function dynamically builds a CNN model based on different hyperparameters selected during the tuning process:
 
 Number of Convolutional Layers: Tuned between 1 and 3 layers.
 
@@ -109,21 +107,35 @@ Convolutional Layer Parameters:
 - Activation Function: Either ReLU or Tanh.
 
 Dropout Rate: Applied after each convolutional layer. Tuned between 0.0 and 0.3 (in increments of 0.1) to control overfitting.
-
 Pooling: After each convolutional block, a MaxPooling2D layer with a 3×3 pool size is applied.
-
-Final Layers:
-A Flatten layer transforms the output into a 1D vector.
-A Dense layer with a softmax activation outputs the final classification.
-
-Compilation:
-Optimizer: Adam
-Loss: Sparse categorical crossentropy
-Metric: Accuracy
+Final Layers: A Flatten layer transforms the output into a 1D vector. A Dense layer with a softmax activation outputs the final classification.
+Compilation: Optimizer: Adam. Loss: Sparse categorical crossentropy. Metric: Accuracy
 
 This setup allows Keras Tuner to systematically explore different combinations of model depth, convolutional parameters, and regularization strategies to find the most effective architecture for the task.
+My best model from the keras tuner was found on trial #18 out of 22 completed trials. The best model summary:
+
+<img width="479" alt="Screenshot 2025-04-20 at 12 16 54 PM" src="https://github.com/user-attachments/assets/a0bae699-a716-404d-99a4-d5f8938c5a29" />
+
+With the following hyperparameters:
+
+'num_layers': 3,
+'layer_1_units': 64,
+'layer_1_kernel_size': 3,
+'layer_1_stride': 1,
+'layer_1_activation': 'relu',
+'layer_1_dropout': 0.2,
+
+<img src="https://github.com/user-attachments/assets/3c31b94a-d554-4a1e-a66e-3039eace6fa6" width="400">
+<img src="https://github.com/user-attachments/assets/969965f5-cc11-4fad-9e12-27378e663eb9" width="400">
+
+The above plots show gradual improvement in both training and validation performance up to around epoch 7, after which the validation metrics begin to diverge and decline. While the gap between training and validation performance starts out small, it continues to widen as training progresses. This growing gap indicates that overfitting is still a significant issue in the model.
+
+Next, I will use transfer learning to utilize pre-trained models.
+
 
 ### Transfer learning
+
+
 
 
 ### Next Steps
