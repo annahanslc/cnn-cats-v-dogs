@@ -79,10 +79,10 @@ Each convolutional layer is followed by a Dropout layer that randomly drops 20% 
 
 The best metrics were seen at epoch 9, and yielded:
 
-train loss: 0.2042 
-train accuracy: 0.9160
-val_loss: 0.3702
-val_accuracy: 0.8362
+- train loss: 0.2042 
+- train accuracy: 0.9160
+- val_loss: 0.3702
+- val_accuracy: 0.8362
 
 <img src="https://github.com/user-attachments/assets/6fb73a2c-9867-42c9-92c0-d51edf131b20" width="400">
 <img src="https://github.com/user-attachments/assets/e0053198-b7f2-40f3-b4c8-08497a67eba3" width="400">
@@ -130,15 +130,37 @@ With the following hyperparameters:
 
 The above plots show gradual improvement in both training and validation performance up to around epoch 7, after which the validation metrics begin to diverge and decline. While the gap between training and validation performance starts out small, it continues to widen as training progresses. This growing gap indicates that overfitting is still a significant issue in the model.
 
-Next, I will use transfer learning to utilize pre-trained models.
+Next, I will use transfer learning to build upon pre-trained models.
 
 
 ### Transfer learning
 
+Transfer learning allows me to start with a strong, proven model that already understands basic patterns in images — so I can focus on fine-tuning it for my specific task, faster and with better results. Pre-trained models have already learned very strong, general features. Even if my dataset is small, I can get high-quality feature extraction immediately. Results are often much better than training a small CNN from scratch.
+
+In my transfer learning model, I leveraged the keras application ResNet50V2. I chose ResNet50V2 for its smaller size and faster time (ms) per inference step on both CPU and GPU. 
+
+For my base model I loaded the ResNet50V2 model pretrained on ImageNet, excluding its top classification layers (include_top=False). I then froze the base model, so that the the pretrained ResNet50V2 weights will not be trained in order to preserve the powerful feature representations it already learned. To preprocess the data, I applied ResNet50V2’s recommended preprocess_input function to scale and normalize the input images correctly before feeding them into the model.
+
+I started with a simple transfer model, but immediately saw a significant improvement in performance compared to my CNN models trained from stratch. I then tuned the hyperparameters by hand, and reached my best model, which contains 2 Dense layers with 64 units each and ReLU activation, each followed by Dropout layers for regularization.
 
 
 
-### Next Steps
+
+### Conclusion
+
+This project lays the groundwork for building robust image classification models using both custom CNNs and transfer learning strategies. Through model design, hyperparameter tuning, and leveraging pretrained architectures like ResNet50V2, significant progress was made toward accurately distinguishing between dogs and cats.
+
+However, this is only the beginning! 
+
+For my steps steps, I would like to explore the following improvements to my model:
+  1. Applying Keras Tuner to the transfer learning model to systematically optimize the dense layers, dropout rates, and learning rates.
+  2. Enhancing regularization techniques and expanding the dataset to further improve generalization and resilience against overfitting.
 
 
 ### References
+
+[1] Will Cukierski. Dogs vs. Cats. https://kaggle.com/competitions/dogs-vs-cats, 2013. Kaggle.
+[2] Microsoft Research. Asirra: A CAPTCHA that Exploits Interest-Aligned Manual Image Categorization. Dataset originally available through Petfinder.com and hosted via Kaggle.
+Kaggle Competition (2013): https://www.kaggle.com/c/dogs-vs-cats
+[3] He, K., Zhang, X., Ren, S., & Sun, J. (2016). Identity Mappings in Deep Residual Networks. *European Conference on Computer Vision (ECCV)*. https://arxiv.org/abs/1603.05027
+[4] TensorFlow Authors. (2015). TensorFlow: Large-scale machine learning on heterogeneous systems. https://www.tensorflow.org/
