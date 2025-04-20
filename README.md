@@ -159,8 +159,7 @@ For my steps steps, I would like to explore the following improvements to my mod
 
 ### References
 
-[1] Will Cukierski. Dogs vs. Cats. https://kaggle.com/competitions/dogs-vs-cats, 2013. Kaggle.
-[2] Microsoft Research. Asirra: A CAPTCHA that Exploits Interest-Aligned Manual Image Categorization. Dataset originally available through Petfinder.com and hosted via Kaggle.
-Kaggle Competition (2013): https://www.kaggle.com/c/dogs-vs-cats
-[3] He, K., Zhang, X., Ren, S., & Sun, J. (2016). Identity Mappings in Deep Residual Networks. *European Conference on Computer Vision (ECCV)*. https://arxiv.org/abs/1603.05027
-[4] TensorFlow Authors. (2015). TensorFlow: Large-scale machine learning on heterogeneous systems. https://www.tensorflow.org/
+ 1. Will Cukierski. Dogs vs. Cats. https://kaggle.com/competitions/dogs-vs-cats, 2013. Kaggle.
+ 2. Microsoft Research. Asirra: A CAPTCHA that Exploits Interest-Aligned Manual Image Categorization. Dataset originally available through Petfinder.com and hosted via Kaggle.
+ 3. He, K., Zhang, X., Ren, S., & Sun, J. (2016). Identity Mappings in Deep Residual Networks. *European Conference on Computer Vision (ECCV)*. https://arxiv.org/abs/1603.05027
+ 4. TensorFlow Authors. (2015). TensorFlow: Large-scale machine learning on heterogeneous systems. https://www.tensorflow.org/
