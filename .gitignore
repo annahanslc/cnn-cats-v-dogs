@@ -174,5 +174,4 @@ cython_debug/
 .pypirc
 
 
-.data
-.data/dogs-vs-cats
+data
