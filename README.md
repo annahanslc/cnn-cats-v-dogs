@@ -30,8 +30,29 @@ Finally, I will take advantage of transfer learning by using the well-establishe
 
 ### About the Data
 
+The dataset originates from a Kaggle competition held in 2013 and consists of images of dogs and cats. These images were originally provided to Microsoft Research by Asirra, a project developed in partnership with Petfinder.com to help homeless pets find new homes.
+
+The photos were manually classified by staff members at thousands of animal shelters across the United States, ensuring accurate labels for each image.
+
+The dataset is separated in training data and test data, with the following charactertistics:
+
+1. The train data contains 25,000 images: 12,500 dogs, 12,500 cats.
+2. The train filenames include the label, such as "dog.8011.jpg"
+3. The test data contains 391 images with an unknown number of cats and dogs.
+4. The filename only contains the number used to identify the image, such as "9733.jpg"
+
+To extract the label for each training image from its filename, I created a function called get_label that retrieves the label directly from the file path.
+
+Because this function is called during the TensorFlow Dataset construction process, it uses TensorFlow operations such as tf.strings.split and tf.where. These TensorFlow-native methods are necessary to ensure compatibility with TensorFlow’s data pipelines, which are highly optimized for performance — enabling parallel processing and GPU acceleration during data preparation.
+
+- tf.strings.split breaks a tensor string into parts, just like Python’s split(), but optimized to work inside TensorFlow graphs and pipelines.
+- tf.where is similar to an "if-else" statement". It checks a condition, and based on whether it's True or False, it chooses between two options, in this case, it returns 1 if is the string contains 'dog' and 0 if it does not.
+
+In addition to the test dataset, I created a validation dataset by splitting the train data into 80% train and 20% val. The validation set will be used to measure the performance of my models. 
+
 
 ### Custom CNN model
+
 
 
 ### Tuning the model
