@@ -118,12 +118,12 @@ My best model from the keras tuner was found on trial #18 out of 22 completed tr
 
 With the following hyperparameters:
 
-'num_layers': 3,
-'layer_1_units': 64,
-'layer_1_kernel_size': 3,
-'layer_1_stride': 1,
-'layer_1_activation': 'relu',
-'layer_1_dropout': 0.2,
+- 'num_layers': 3,
+- 'layer_1_units': 64,
+- 'layer_1_kernel_size': 3,
+- 'layer_1_stride': 1,
+- 'layer_1_activation': 'relu',
+- 'layer_1_dropout': 0.2,
 
 <img src="https://github.com/user-attachments/assets/3c31b94a-d554-4a1e-a66e-3039eace6fa6" width="400">
 <img src="https://github.com/user-attachments/assets/969965f5-cc11-4fad-9e12-27378e663eb9" width="400">
