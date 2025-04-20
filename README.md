@@ -22,7 +22,7 @@ Finally, I will take advantage of transfer learning by using the well-establishe
 
 1. [About the Data](#about-the-data)
 2. [Custom CNN model](#custom-cnn-model)
-3. [Tuning the mode](#tuning-the-model)
+3. [Keras Tuner](#keras-tuner)
 4. [Transfer Learning](#transfer-learning)
 5. [Next Steps](#next-steps)
 6. [References](#references)
@@ -54,9 +54,7 @@ In addition to the test dataset, I created a validation dataset by splitting the
 # Custom CNN model
 ### Baseline model
 
-My baseline model is a simple Convolutional Neural Network (CNN) designed to provide an initial benchmark for classifying dog and cat images.
-
-It follows a straightforward architecture:
+My baseline model is a simple Convolutional Neural Network (CNN) designed to provide an initial benchmark for classifying dog and cat images. It follows a straightforward architecture:
 
 **Rescaling Layer**: The input pixel values, originally in the range [0, 255], are scaled down to [0, 1] using Rescaling(1./255). This normalization helps improve training stability and convergence speed.
 
@@ -89,9 +87,41 @@ val_accuracy: 0.8362
 <img src="https://github.com/user-attachments/assets/6fb73a2c-9867-42c9-92c0-d51edf131b20" width="400">
 <img src="https://github.com/user-attachments/assets/e0053198-b7f2-40f3-b4c8-08497a67eba3" width="400">
 
+Based on the above plots, although the training loss and accuracy continue to improve steadily across epochs, the validation performance only improves slightly and shows consistent fluctuations.
 
-### Tuning the model
+This indicates that the model is struggling to make meaningful improvements on unseen data. While the model fits the training data increasingly well, the validation metrics remain unstable and eventually stagnate. This clear gap between training and validation performance suggests that the model is overfitting — learning the training examples too well without generalizing effectively to new data.
 
+
+### Keras Tuner
+
+Next, I used the keras tuner to help me search across many combinations of hyperparameters to find the best performing model. 
+
+To optimize the model’s architecture, I implemented a custom tune_model function for Keras Tuner.
+
+This function dynamically builds a CNN model based on different hyperparameters selected during the tuning process:
+
+Number of Convolutional Layers: Tuned between 1 and 3 layers.
+
+Convolutional Layer Parameters: 
+- Filters: Either 64 or 128 filters per layer.
+- Kernel Size: Either 3×3 or 4×4.
+- Stride: 1 or 2 pixels.
+- Activation Function: Either ReLU or Tanh.
+
+Dropout Rate: Applied after each convolutional layer. Tuned between 0.0 and 0.3 (in increments of 0.1) to control overfitting.
+
+Pooling: After each convolutional block, a MaxPooling2D layer with a 3×3 pool size is applied.
+
+Final Layers:
+A Flatten layer transforms the output into a 1D vector.
+A Dense layer with a softmax activation outputs the final classification.
+
+Compilation:
+Optimizer: Adam
+Loss: Sparse categorical crossentropy
+Metric: Accuracy
+
+This setup allows Keras Tuner to systematically explore different combinations of model depth, convolutional parameters, and regularization strategies to find the most effective architecture for the task.
 
 ### Transfer learning
 
