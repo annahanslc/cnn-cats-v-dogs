@@ -53,6 +53,23 @@ In addition to the test dataset, I created a validation dataset by splitting the
 
 ### Custom CNN model
 
+My baseline model is a simple Convolutional Neural Network (CNN) designed to provide an initial benchmark for classifying dog and cat images.
+
+It follows a straightforward architecture:
+
+**Rescaling Layer**: The input pixel values, originally in the range [0, 255], are scaled down to [0, 1] using Rescaling(1./255). This normalization helps improve training stability and convergence speed.
+
+**Convolutional Layer**: A Conv2D layer with 32 filters of size 3×3 is applied, using stride 1 and 'same' padding. 'same' padding ensures that the output spatial dimensions match the input dimensions. The ReLU activation function introduces non-linearity, allowing the model to learn complex patterns.
+
+**Flatten Layer**: The output from the convolutional layer is flattened into a 1D vector to prepare it for the dense (fully connected) layer.
+
+**Dense Output Layer**: A Dense layer with units equal to the number of classes (len(class_names), i.e., 2 for dog and cat) and a softmax activation function, softmax ensures the output values are probabilities that sum to 1, making it suitable for multi-class classification.
+
+**Compilation**:
+The model is compiled with: 
+- Optimizer: **Adam** — an adaptive learning rate optimizer that works well out of the box.
+- Loss: **sparse_categorical_crossentropy** — appropriate since the class labels are integers (0 for cat, 1 for dog).
+- Metric: **Accuracy** — to measure how often predictions match labels.
 
 
 ### Tuning the model
