@@ -9,7 +9,7 @@ Imagine if the website could instantly recognize whether a photo showed a dog or
 
 The goal of my project is to build an image classification model using Convolutional Neural Networks (CNNs) to automatically predict whether an uploaded image contains a dog or a cat — helping pet websites level up their onboarding process with a little help from deep learning.
 
-### Project Outline
+# Project Outline
 
 To find the best-performing model, I will start with the simplest approach: manually building a basic Convolutional Neural Network (CNN) using Keras and tuning it by hand.
 
@@ -18,7 +18,7 @@ Next, I will leverage Keras Tuner to automate the search for the best hyperparam
 Finally, I will take advantage of transfer learning by using the well-established pre-trained model ResNet50V2 — building on the shoulders of giants to further boost performance and accelerate training.
 
 
-### Table of Contents
+# Table of Contents
 
 1. [About the Data](#about-the-data)
 2. [Custom CNN model](#custom-cnn-model)
@@ -28,7 +28,7 @@ Finally, I will take advantage of transfer learning by using the well-establishe
 6. [References](#references)
 
 
-### About the Data
+# About the Data
 
 The dataset originates from a Kaggle competition held in 2013 and consists of images of dogs and cats. These images were originally provided to Microsoft Research by Asirra, a project developed in partnership with Petfinder.com to help homeless pets find new homes.
 
@@ -51,7 +51,8 @@ Because this function is called during the TensorFlow Dataset construction proce
 In addition to the test dataset, I created a validation dataset by splitting the train data into 80% train and 20% val. The validation set will be used to measure the performance of my models. 
 
 
-### Custom CNN model
+# Custom CNN model
+### Baseline model
 
 My baseline model is a simple Convolutional Neural Network (CNN) designed to provide an initial benchmark for classifying dog and cat images.
 
@@ -70,6 +71,23 @@ The model is compiled with:
 - Optimizer: **Adam** — an adaptive learning rate optimizer that works well out of the box.
 - Loss: **sparse_categorical_crossentropy** — appropriate since the class labels are integers (0 for cat, 1 for dog).
 - Metric: **Accuracy** — to measure how often predictions match labels.
+
+### Tuning the model by hand:
+
+After tuning the model by hand, my best model builds upon the baseline by introducing a deeper architecture with multiple convolutional and pooling layers, along with dropout for regularization.
+
+The architecture includes three convolutional layers are stacked, each with 64 filters of size 3×3, stride 1, 'same' padding, and ReLU activation.
+Each convolutional layer is followed by a Dropout layer that randomly drops 20% of neurons to reduce overfitting, as well as a MaxPooling2D layer, which downsamples feature maps using a pool size of 3×3 to progressively reduce spatial dimensions.
+
+The best metrics were seen at epoch 9, and yielded:
+
+train loss: 0.2042 
+train accuracy: 0.9160
+val_loss: 0.3702
+val_accuracy: 0.8362
+
+<img src="https://github.com/user-attachments/assets/6fb73a2c-9867-42c9-92c0-d51edf131b20" width="400">
+<img src="https://github.com/user-attachments/assets/e0053198-b7f2-40f3-b4c8-08497a67eba3" width="400">
 
 
 ### Tuning the model
